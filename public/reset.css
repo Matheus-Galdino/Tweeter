@@ -1,0 +1,32 @@
+:root {
+  font-size: 62.5%;
+}
+
+html,
+body {
+  min-height: 100vh;
+}
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  outline: none;
+  font-weight: 500;
+  box-sizing: border-box;
+  transition: all 0.3s ease-out;
+  font-family: "Poppins", sans-serif;
+}
+
+input,
+textarea,
+button,
+select {
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
+}
+
+button {
+  cursor: pointer;
+}
