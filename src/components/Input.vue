@@ -1,12 +1,18 @@
 <template>
   <div class="input-container">
-    <label :for="labelText">{{ labelText }}</label>
-    <div>
+    <div class="input-container__header">
+      <label :for="labelText">{{ labelText }}</label>
+      <p v-show="showCharCount && inputType != 'date'">
+        {{ `${modelValue.length} / ${maxLength}` }}
+      </p>
+    </div>
+    <div class="input-container__content">
       <span class="material-icons" v-show="startIcon">{{ startIcon }}</span>
       <input
         :type="inputType"
         :id="labelText"
         @input="$emit('update:modelValue', $event.target.value)"
+        :maxlength="maxLength"
       />
       <span class="material-icons" v-show="endIcon">{{ endIcon }}</span>
     </div>
@@ -27,7 +33,7 @@ export default defineComponent({
       type: String,
       default: "text",
       validator(value: string) {
-        return ["text", "password", "email"].includes(value);
+        return ["text", "password", "email", "date"].includes(value);
       },
     },
     modelValue: {
@@ -40,6 +46,13 @@ export default defineComponent({
     endIcon: {
       type: String,
     },
+    maxLength: {
+      type: Number,
+    },
+    showCharCount: {
+      type: Boolean,
+      default: false,
+    },
   },
 });
 </script>
@@ -48,8 +61,13 @@ export default defineComponent({
 .input-container {
   margin: 1rem 0;
 
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
   label {
-    display: block;
     text-align: start;
     margin-bottom: 3px;
 

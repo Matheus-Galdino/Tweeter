@@ -1,6 +1,6 @@
 <template>
   <div class="page login">
-    <form>
+    <form @submit.prevent="login">
       <img src="@/assets/tweeter.svg" alt="Tweeter logo" />
 
       <h1>Join now!</h1>
@@ -10,14 +10,14 @@
 
       <a href="#">Forgot password?</a>
 
-      <button>Login</button>
+      <button @click.prevent="login">Login</button>
       <button class="signup" @click.prevent="isSigningUp = true">
         Sign up
       </button>
     </form>
 
     <Mask v-show="isSigningUp">
-      <Signup />
+      <Signup @close="isSigningUp = false" />
     </Mask>
   </div>
 </template>
@@ -25,18 +25,24 @@
 <script lang="ts">
 import Mask from "@/components/Mask.vue";
 import Input from "@/components/Input.vue";
+import Signup from "@/components/Signup.vue";
 
 import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "Login",
-  components: { Input, Mask },
+  components: { Input, Mask, Signup },
   data() {
     return {
       email: "",
       password: "",
       isSigningUp: false,
     };
+  },
+  methods: {
+    login() {
+      alert("Login");
+    },
   },
 });
 </script>
@@ -51,7 +57,7 @@ export default defineComponent({
 
 form {
   width: 100%;
-  padding: 3rem 2rem 3rem;
+  padding: 3rem 2rem;
   text-align: center;
 
   border-radius: 15px;
@@ -75,27 +81,6 @@ a {
   margin: 1rem 0 2rem;
   font-size: 1.4rem;
   text-decoration: none;
-}
-
-button {
-  display: inline-block;
-
-  width: 100%;
-  max-width: 400px;
-
-  padding: 1.5rem;
-  font-size: 1.4rem;
-
-  border: none;
-  border-radius: 7px;
-
-  color: #fff;
-  background: #2f80ed;
-  border: 1px solid #2f80ed;
-
-  &:hover {
-    background: #105bbc;
-  }
 }
 
 .signup {
