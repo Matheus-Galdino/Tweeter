@@ -5,12 +5,29 @@
 
       <h1>Join now!</h1>
 
-      <Input labelText="Email" inputType="email" v-model="email" />
-      <Input labelText="Password" inputType="password" v-model="password" />
+      <Input
+        labelText="Email"
+        inputType="email"
+        v-model="user.email"
+        v-model:valid="validations.email"
+        :required="true"
+      />
+      <Input
+        labelText="Password"
+        inputType="password"
+        v-model="user.password"
+        v-model:valid="validations.password"
+        :required="true"
+      />
 
       <a href="#">Forgot password?</a>
 
-      <button @click.prevent="login">Login</button>
+      <button
+        @click.prevent="login"
+        :disabled="!validations.email || !validations.password"
+      >
+        Login
+      </button>
       <button class="signup" @click.prevent="isSigningUp = true">
         Sign up
       </button>
@@ -34,8 +51,14 @@ export default defineComponent({
   components: { Input, Mask, Signup },
   data() {
     return {
-      email: "",
-      password: "",
+      user: {
+        email: "",
+        password: "",
+      },
+      validations: {
+        email: null,
+        password: null,
+      },
       isSigningUp: false,
     };
   },
@@ -75,7 +98,7 @@ h1 {
 }
 
 a {
-  display: inline-block;
+  display: block;
 
   color: #2f80ed;
   margin: 1rem 0 2rem;

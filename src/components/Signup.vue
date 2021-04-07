@@ -10,11 +10,21 @@
         <div :class="['connector', { active: step >= 1 }]">
           <div class="inner-bg"></div>
         </div>
-        <li :class="{ active: step > 2 }" @click="step = 2">2</li>
+        <li
+          :class="{ active: step > 2 }"
+          @click="if (validations.namee && validations.birthday) step = 2;"
+        >
+          2
+        </li>
         <div :class="['connector', { active: step >= 2 }]">
           <div class="inner-bg"></div>
         </div>
-        <li :class="{ active: step == 3 }" @click="step = 3">3</li>
+        <li
+          :class="{ active: step == 3 }"
+          @click="if (validations.username && validations.email) step = 3;"
+        >
+          3
+        </li>
       </ul>
     </div>
 
@@ -22,14 +32,26 @@
       <section v-show="step == 1">
         <Input
           labelText="Name"
+          :minLength="3"
           :maxLength="50"
+          :required="true"
           :showCharCount="true"
           v-model="user.name"
+          v-model:valid="validations.name"
         />
 
-        <Input labelText="Birthday" v-model="user.birthday" />
+        <Input
+          labelText="Birthday"
+          inputType="date"
+          :required="true"
+          v-model="user.birthday"
+          v-model:valid="validations.birthday"
+        />
 
-        <button @click="step = 2">
+        <button
+          :disabled="!validations.name || !validations.birthday"
+          @click="step = 2"
+        >
           Next
           <span class="material-icons-outlined"> arrow_right_alt </span>
         </button>
@@ -38,13 +60,22 @@
       <section v-show="step == 2">
         <Input
           labelText="Username"
+          :minLength="5"
           :maxLength="50"
+          :required="true"
           :showCharCount="true"
           v-model="user.username"
+          v-model:valid="validations.username"
         />
-        <Input labelText="Email" inputType="email" v-model="user.email" />
+        <Input
+          labelText="Email"
+          inputType="email"
+          :required="true"
+          v-model="user.email"
+          v-model:valid="validations.email"
+        />
 
-        <button @click="step = 3">
+        <button :disabled="!validations.username || !validations.email" @click="step = 3">
           Next
           <span class="material-icons-outlined"> arrow_right_alt </span>
         </button>
@@ -53,36 +84,35 @@
       <section v-show="step == 3">
         <Input
           labelText="Password"
+          inputType="password"
+          :minLength="8"
           :maxLength="20"
+          :required="true"
           :showCharCount="true"
           v-model="user.password"
+          v-model:valid="validations.password"
         />
 
         <Input
           labelText="Confirm Password"
+          inputType="password"
+          :minLength="8"
           :maxLength="20"
+          :required="true"
           :showCharCount="true"
           v-model="confirmPassword"
+          v-model:valid="confirmPasswordValid"
         />
 
         <button @click="signup">Sign up</button>
       </section>
-      <!--
-          <Select
-          :options="options"
-          v-model:selected="selected"
-        />
-         {{ `${selected.text} || ${selected.value}` }} -->
     </div>
   </section>
 </template>
 
 <script lang="ts">
 import Input from "./Input.vue";
-// import Select from "./Select.vue";
-import SelectOption from "@/models/SelectOption.interface";
-
-import { defineComponent, PropType } from "vue";
+import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "Signup",
@@ -90,21 +120,21 @@ export default defineComponent({
   data() {
     return {
       step: 1,
-      selected: {
-        type: Object as PropType<SelectOption>,
-      },
       user: {
         name: "",
         email: "",
         birthday: "",
         username: "",
       },
+      validations: {
+        name: null,
+        birthday: null,
+        username: null,
+        email: null,
+        password: null,
+      },
       confirmPassword: "",
-      options: [
-        { text: "Option a", value: "A" },
-        { text: "Option b", value: "B" },
-        { text: "Option c", value: "C" },
-      ] as SelectOption[],
+      confirmPasswordValid: null,
     };
   },
   methods: {
