@@ -85,6 +85,8 @@ header {
 
     p {
       display: none;
+      font-weight: 600;
+      font-size: 1.5rem;
     }
 
     .material-icons {
