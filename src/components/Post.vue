@@ -23,9 +23,9 @@
     <section class="post__footer">
       <div class="interactions">
         <span class="material-icons-outlined"> mode_comment </span>
-        <span class="material-icons-outlined"> autorenew </span>
-        <span class="material-icons-outlined"> favorite_border </span>
-        <span class="material-icons-outlined"> bookmark_border </span>
+        <span class="material-icons-outlined retweet active"> autorenew </span>
+        <span class="material-icons-outlined like"> favorite_border </span>
+        <span class="material-icons-outlined bookmark"> bookmark_border </span>
       </div>
 
       <div class="comment-section">
@@ -152,6 +152,18 @@ export default defineComponent({
 
     &:hover {
       background: #f2f2f2;
+    }
+
+    &.active {
+      &.retweet {
+        color: #27ae60;
+      }
+      &.like {
+        color: #eb5757;
+      }
+      &.bookmark {
+        color: #2d9cdb;
+      }
     }
   }
 }
