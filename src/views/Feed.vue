@@ -1,5 +1,7 @@
 <template>
   <div class="page feed">
+    <Header />
+
     <create-tweet @created-post="loadPosts" />
 
     <div class="posts">
@@ -15,13 +17,14 @@ import PostApi from "@/API/PostApi";
 import PostType from "@/models/Post";
 
 import Post from "@/components/Post.vue";
+import Header from "@/components/Header.vue";
 import CreateTweet from "@/components/CreateTweet.vue";
-import store from "@/store";
 
 export default defineComponent({
   name: "Feed",
   components: {
     Post,
+    Header,
     CreateTweet,
   },
   data() {
@@ -43,12 +46,12 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .feed {
-  padding: 1.5rem 2rem 0;
+  padding: 10rem 2rem 0;  
   background: rgba(0, 0, 0, 0.1);
 }
 
 .posts {
-  margin-top: 3rem;
+  margin: 3rem 0 10rem;
 
   display: flex;
   row-gap: 2rem;

@@ -1,16 +1,16 @@
-<template>      
+<template>  
   <router-view />
 </template>
 
 <style lang="scss">
 @import "./scss/partials/_globals.scss";
 
-#app {  
+#app {
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;  
+  -moz-osx-font-smoothing: grayscale;
 
   display: flex;
-  flex-direction: column;
+  flex-direction: column;  
 }
 </style>
