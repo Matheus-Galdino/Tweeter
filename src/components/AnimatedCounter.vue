@@ -1,5 +1,5 @@
 <template>
-  <h1>{{ `${currentValue} ${text}` }}</h1>
+  <p>{{ `${currentValue} ${text}` }}</p>
 </template>
 
 <script lang="ts">
@@ -34,6 +34,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style>
-</style>

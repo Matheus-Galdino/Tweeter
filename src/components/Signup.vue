@@ -12,7 +12,7 @@
         </div>
         <li
           :class="{ active: step > 2 }"
-          @click="if (validations.namee && validations.birthday) step = 2;"
+          @click="if (validations.name && validations.birthday) step = 2;"
         >
           2
         </li>
@@ -40,18 +40,9 @@
           v-model:valid="validations.name"
         />
 
-        <Input
-          labelText="Birthday"
-          inputType="date"
-          :required="true"
-          v-model="user.birthday"
-          v-model:valid="validations.birthday"
-        />
+        <Input labelText="Birthday" inputType="date" />
 
-        <button
-          :disabled="!validations.name || !validations.birthday"
-          @click="step = 2"
-        >
+        <button :disabled="!validations.name" @click="step = 2">
           Next
           <span class="material-icons-outlined"> arrow_right_alt </span>
         </button>
@@ -75,7 +66,10 @@
           v-model:valid="validations.email"
         />
 
-        <button :disabled="!validations.username || !validations.email" @click="step = 3">
+        <button
+          :disabled="!validations.username || !validations.email"
+          @click="step = 3"
+        >
           Next
           <span class="material-icons-outlined"> arrow_right_alt </span>
         </button>
@@ -112,7 +106,11 @@
 
 <script lang="ts">
 import Input from "./Input.vue";
+import AuthApi from "@/API/AuthApi";
+import User from "@/models/User";
 import { defineComponent } from "vue";
+import router from "@/router";
+import store from "@/store";
 
 export default defineComponent({
   name: "Signup",
@@ -123,12 +121,11 @@ export default defineComponent({
       user: {
         name: "",
         email: "",
-        birthday: "",
         username: "",
-      },
+        password: "",
+      } as User,
       validations: {
         name: null,
-        birthday: null,
         username: null,
         email: null,
         password: null,
@@ -138,8 +135,12 @@ export default defineComponent({
     };
   },
   methods: {
-    signup() {
-      alert("Good job! now get out!");
+    async signup() {
+      const api = new AuthApi();
+      const token = await api.Signup(this.user);
+    
+      store.commit("setToken", token.value);
+      router.push("/feed")
     },
   },
 });

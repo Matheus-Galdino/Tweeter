@@ -1,5 +1,6 @@
 .page {
   flex-grow: 1;
+  padding: 0 2rem;
 }
 
 button {
@@ -26,4 +27,11 @@ button {
   &:hover {
     background: #105bbc;
   }
+}
+
+.small-img {
+  width: 5rem;
+  height: 5rem;
+  object-fit: cover;
+  border-radius: 10px;
 }

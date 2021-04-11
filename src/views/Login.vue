@@ -40,11 +40,16 @@
 </template>
 
 <script lang="ts">
+import AuthApi from "@/API/AuthApi";
+import User from "@/models/User";
+
 import Mask from "@/components/Mask.vue";
 import Input from "@/components/Input.vue";
 import Signup from "@/components/Signup.vue";
 
 import { defineComponent } from "vue";
+import router from "@/router";
+import store from "@/store";
 
 export default defineComponent({
   name: "Login",
@@ -54,7 +59,7 @@ export default defineComponent({
       user: {
         email: "",
         password: "",
-      },
+      } as User,
       validations: {
         email: null,
         password: null,
@@ -63,8 +68,20 @@ export default defineComponent({
     };
   },
   methods: {
-    login() {
-      alert("Login");
+    async login() {
+      const api = new AuthApi();
+      const token = await api.Login(this.user);
+
+      // if(rememberMe){
+      // localStorage.setItem("token", token.value);
+      //  localStorage.setItem(
+      //    "token_expires",
+      //    new Date(token.expires).toUTCString()
+      //  );
+      //   }
+
+      store.commit("setToken", token.value);
+      router.push("/feed");
     },
   },
 });
@@ -74,8 +91,6 @@ export default defineComponent({
 .login {
   display: flex;
   align-items: center;
-
-  padding: 0 2rem;
 }
 
 form {
